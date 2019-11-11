@@ -67,6 +67,13 @@ int ListAdd(list_t &self, index_t index, listelem_t data);
  */
 int ListRemove(list_t &self, index_t index);
 
+/**
+ * Sort list
+ * @param self List
+ * @return Error code
+ */
+int ListSort(list_t &self);
+
 
 /**
  * Realloc new space for list if it's full

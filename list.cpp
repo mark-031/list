@@ -262,6 +262,46 @@ int ListRemove(list_t &self, index_t index)
     return ListRemoveAbs(self, absIndex);
 }
 
+int ListSort(list_t &self)
+{
+    if(ListOk(self))
+        return (int) self.state;
+    
+    if(self.state == LSTATE(OkSorted))
+        return 0;
+
+    listelem_t* buf = (listelem_t*) calloc(self.size, sizeof(listelem_t));
+
+    if(buf == nullptr)
+        return ListAllocError;
+
+    index_t current = self.next[0];
+
+    index_t count = 0;
+    while(current != 0)
+    {
+        buf[count++] = self.data[current];
+        current  = self.next[current];
+    }
+
+    for(index_t i = 1; i <= count; ++i)
+    {
+        self.next[i] = i + 1;
+        self.prev[i] = i - 1;
+        self.data[i] = buf[i - 1];
+    }
+    self.next[count] = 0;
+    
+    ListInitFree_(self, count + 1, self.size - 1);
+
+    free(buf);
+
+    if(self.state == LSTATE(Ok))
+        self.state = LSTATE(OkSorted);
+
+    return 0;
+}
+
 int ListExtend_(list_t &self)
 {
     if(ListOk(self))
