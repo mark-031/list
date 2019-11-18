@@ -3,4 +3,5 @@ dump/
 *.png
 dump.*
 main
+main.exe
 main.cpp

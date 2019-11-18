@@ -50,7 +50,7 @@ int ListInit(list_t &self, index_t size)
     self.state = LSTATE(OkSorted);
 
     self.size = size;
-    self.free = 0; //1;
+    self.free = 0;
 
     self.next = (index_t*) calloc(size, sizeof(index_t));
 
@@ -125,8 +125,8 @@ int ListDump(const list_t &self)
     fprintf(dumpfile, "graph list_t {\n");
 
     fprintf(dumpfile, "    rankdir=\"LR\";\n");
-    fprintf(dumpfile, "    head[shape=circle, label=\"Head\"];\n");
-    fprintf(dumpfile, "    tail[shape=circle, label=\"Tail\"];\n");
+    fprintf(dumpfile, "    head[shape=circle, label=\"Head: " INDEX_T "\"];\n", self.next[0]);
+    fprintf(dumpfile, "    tail[shape=circle, label=\"Tail: " INDEX_T "\"];\n", self.prev[0]);
     fprintf(dumpfile, "    node[shape=record];\n");
     
     index_t counter = 0;
@@ -149,7 +149,7 @@ int ListDump(const list_t &self)
         fprintf(dumpfile, "    l_elem" INDEX_T ": <next>", i);
     }
 
-    fprintf(dumpfile, " -- tail;");
+    fprintf(dumpfile, " -- tail;\n");
 
     fprintf(dumpfile, "}");
 
@@ -207,7 +207,6 @@ int ListAddAbs(list_t &self, index_t absIndex, listelem_t data)
     index_t absPrev    = absIndex;
 
     self.free = self.next[absCurrent];
-    self.prev[self.free] = self.prev[absCurrent];
 
     self.next[absCurrent] = absNext;
     self.prev[absCurrent] = absPrev;
