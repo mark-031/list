@@ -290,6 +290,9 @@ int ListSort(list_t &self)
         self.data[i] = buf[i - 1];
     }
     self.next[count] = 0;
+
+    self.next[0] = 0;
+    self.prev[0] = count;
     
     ListInitFree_(self, count + 1, self.size - 1);
 
