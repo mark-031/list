@@ -332,6 +332,9 @@ int ListExtend_(list_t &self)
     if(buf == nullptr)
     {
         self.next = (index_t*) realloc(self.next, self.size * sizeof(index_t));
+
+        assert(self.next != nullptr);
+
         return ListAllocError;
     }
 
@@ -343,6 +346,10 @@ int ListExtend_(list_t &self)
     {
         self.next = (index_t*) realloc(self.next, self.size * sizeof(index_t));
         self.prev = (index_t*) realloc(self.prev, self.size * sizeof(index_t));
+
+        assert(self.next != nullptr);
+        assert(self.prev != nullptr);
+        
         return ListAllocError;
     }
 
